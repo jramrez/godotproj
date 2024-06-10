@@ -1,0 +1,75 @@
+[gd_scene load_steps=13 format=3 uid="uid://562huikaxp4o"]
+
+[ext_resource type="Script" path="res://Small Enemy.gd" id="1_4nevt"]
+[ext_resource type="Texture2D" uid="uid://djtu2bbbjgble" path="res://0x72_DungeonTilesetII_v1.7/frames/chort_idle_anim_f0.png" id="2_hbmta"]
+[ext_resource type="Texture2D" uid="uid://cfwulmd6sjptc" path="res://0x72_DungeonTilesetII_v1.7/frames/chort_idle_anim_f1.png" id="3_hqiv5"]
+[ext_resource type="Texture2D" uid="uid://cmx5xrqybxhhu" path="res://0x72_DungeonTilesetII_v1.7/frames/chort_idle_anim_f2.png" id="4_t508f"]
+[ext_resource type="Texture2D" uid="uid://chg2m0qkemott" path="res://0x72_DungeonTilesetII_v1.7/frames/chort_idle_anim_f3.png" id="5_rcfog"]
+[ext_resource type="Texture2D" uid="uid://bsavhio86h6vn" path="res://0x72_DungeonTilesetII_v1.7/frames/chort_run_anim_f0.png" id="6_vta0w"]
+[ext_resource type="Texture2D" uid="uid://ct37ur83yoge3" path="res://0x72_DungeonTilesetII_v1.7/frames/chort_run_anim_f1.png" id="7_dn1n3"]
+[ext_resource type="Texture2D" uid="uid://di2wdoh8l8gnl" path="res://0x72_DungeonTilesetII_v1.7/frames/chort_run_anim_f2.png" id="8_4xpci"]
+[ext_resource type="Texture2D" uid="uid://d0amp0fhq4dgo" path="res://0x72_DungeonTilesetII_v1.7/frames/chort_run_anim_f3.png" id="9_8v58x"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_eexwf"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_hbmta")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_hqiv5")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_t508f")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_rcfog")
+}],
+"loop": true,
+"name": &"Idle",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("6_vta0w")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_dn1n3")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_4xpci")
+}, {
+"duration": 1.0,
+"texture": ExtResource("9_8v58x")
+}],
+"loop": true,
+"name": &"Run",
+"speed": 7.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_jtoh4"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_nnwek"]
+
+[node name="chort" type="CharacterBody2D"]
+script = ExtResource("1_4nevt")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_eexwf")
+animation = &"Run"
+frame_progress = 0.986526
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 7)
+shape = SubResource("CircleShape2D_jtoh4")
+
+[node name="detection_area" type="Area2D" parent="."]
+collision_layer = 2
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="detection_area"]
+scale = Vector2(7.34824, 7.84442)
+shape = SubResource("CircleShape2D_nnwek")
+
+[connection signal="body_entered" from="detection_area" to="." method="_on_detection_area_body_entered"]
+[connection signal="body_exited" from="detection_area" to="." method="_on_detection_area_body_exited"]
